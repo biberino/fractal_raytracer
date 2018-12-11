@@ -1,0 +1,123 @@
+cwd = /home/biber/robin/fraktale/cpp/raytracer/
+machine = x86_64
+system = Linux
+toolset = clang
+toolset_clang = true
+toolset_gcc = true
+variation = debug
+rel_path = 
+
+
+# buildfox core configuration
+# buildfox relies on deps and they were added in ninja v1.3
+# please note, if you will use subfox/subninja commands
+# then requirement will raise up to ninja v1.6 because we depend on scoped rules
+ninja_required_version = 1.3
+
+# some basic ignore folders
+excluded_dirs = .git .hg .svn
+
+
+# clang suport
+cc = clang
+cxx = clang++
+
+
+
+rule cc
+  command = $cc -c $in -o $out -MMD $cxxflags $defines $includedirs
+  description = cc $in
+  depfile = $out.d
+  deps = gcc
+
+rule cxx
+  command = $cxx -o $out -MMD $cxxflags $defines $includedirs -c $in
+  description = cxx $in
+  depfile = $out.d
+  deps = gcc
+
+rule lib
+  command = ar rcs $out $in
+  description = ar $in
+
+rule link
+  command = $cxx $ldflags $frameworks $libdirs $in -o $out $libs
+  description = link $out
+
+rule link_so
+  command = $cxx -shared -fPIC $ldflags $frameworks $libdirs -o $out $in $libs
+  description = cxx $in
+
+# extensions transformers and auto
+
+
+# Clang flags
+# more info here http://clang.llvm.org/docs/CommandGuide/clang.html
+# TODO:
+# optimizations
+cxx_omit_frame_pointer = -fomit-frame-pointer
+cxx_disable_optimizations = -O0
+cxx_full_optimizations = -O3
+cxx_size_optimizations = -Os
+cxx_speed_optimizations = -Ofast
+
+# code generation
+cxx_exceptions = -fexceptions
+cxx_no_exceptions = -fno-exceptions
+cxx_whole_program_optimizations = -O4
+cxx_rtti = -frtti
+cxx_no_rtti = -fno-rtti
+cxx_floatpoint_fast = -funsafe-math-optimizations
+cxx_floatpoint_strict = -ffloat-store
+cxx_avx = -mavx
+cxx_avx2 = -mavx2
+cxx_sse = -msse
+cxx_sse2 = -msse2
+cxx_sse3 = -msse3
+cxx_ssse3 = -mssse3
+cxx_sse4.1 = -msse4.1
+
+# language
+cxx_symbols = -g
+cxx_11 = -std=c++11
+cxx_14 = -std=c++14
+
+# miscellaneous
+cxx_fatal_warnings = -Werror
+cxx_extra_warnings = -Wall -Wextra
+cxx_no_warnings = -w
+
+# linker flags
+ld_ignore_default_libs = -nodefaultlibs
+
+# transformers
+defines = 
+includedirs = 
+libdirs = 
+libs = 
+frameworks = 
+# don't enable this with gcc/clang on non Darwins
+
+
+# main flags
+# main flags
+cxxflags = 
+# don't enable this with gcc/clang on Windows
+# TODO: We shouldn't have it enabled for every object file.
+# But we need it to build object files of the shared libraries.
+cxxflags = -fPIC
+ldflags = 
+cxxflags = -fPIC -g
+ldflags =  -g
+# generated with love by buildfox from build.fox
+rel_path = 
+cxxflags = -std=c++11 -Ofast -ffast-math -g
+# ldflags = -lpthread -std=c++11 -Ofast -ffast-math `pkg-config gtkmm-3.0 --cflags --libs`
+libs = -lpthread -lGL -lGLU -lglut
+cc = gcc
+cxx = g++
+
+build build/_DrawHelper.o: cxx src/DrawHelper.cpp
+build build/_main.o: cxx src/main.cpp
+build build/_ray.o: cxx src/ray.cpp
+build bin/raytracer: link build/_DrawHelper.o build/_main.o build/_ray.o

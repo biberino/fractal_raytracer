@@ -1,0 +1,8 @@
+cxxflags = -std=c++11 -Ofast -ffast-math -g
+# ldflags = -lpthread -std=c++11 -Ofast -ffast-math `pkg-config gtkmm-3.0 --cflags --libs`
+libs = pthread GL GLU glut
+cc = gcc
+cxx = g++
+
+build objects(build/**_*): auto src/**/*.cpp
+build application(bin/raytracer): auto objects(build/*)
