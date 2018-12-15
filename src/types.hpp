@@ -25,9 +25,22 @@ struct vector_3d
         z = zp;
     }
 
+    vector_3d(const vector_3d &vec)
+    {
+        x = vec.x;
+        y = vec.y;
+        z = vec.z;
+    }
+
     vector_3d operator+(const vector_3d &vec) const
     {
         return vector_3d(x + vec.x, y + vec.y, z + vec.z);
+    }
+
+    bool operator==(const vector_3d &vec) const
+    {
+        std::cout << (*this - vec).to_string() << '\n';
+        return ((*this - vec).length_squared() == 0);
     }
 
     vector_3d operator-(const vector_3d &vec) const
@@ -134,8 +147,18 @@ struct screen_context
         forward.normalize();
 
         vector_3d temp(0, 1, 0);
+
         right = temp.cross_prod_with(forward);
-        right.normalize();
+        //if right is arbitary, we decide
+        if (right.length_squared() == 0)
+        {
+            right = vector_3d(1, 0, 0);
+        }
+        else
+        {
+            right.normalize();
+        }
+
         up = forward.cross_prod_with(right);
         up.normalize();
 
@@ -207,10 +230,10 @@ struct Box
     {
         if ((u.dot_prod_with(x) <= uP1) && (u.dot_prod_with(x) >= uP2))
         {
-            
+
             if ((v.dot_prod_with(x) <= vP1) && (v.dot_prod_with(x) >= vP2))
             {
-    
+
                 if ((w.dot_prod_with(x) <= wP1) && w.dot_prod_with(x) >= wP2)
                 {
                     return true;
@@ -221,5 +244,7 @@ struct Box
         return false;
     }
 };
+
+using func_callback = vector_3d (*)(const vector_3d &, const vector_3d &);
 
 #endif // !TYPES_GUARD

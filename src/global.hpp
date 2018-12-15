@@ -10,9 +10,9 @@
 const int WIDTH = 800;
 const int HEIGHT = 800;
 
-const double SCREEN_WIDTH = 0.5f;
-const double SCREEN_HEIGHT =0.5f;
-const double SCREEN_DISTANCE = 0.2f;
+const double SCREEN_WIDTH = 1.2f;
+const double SCREEN_HEIGHT =1.2f;
+const double SCREEN_DISTANCE = 0.5f;
 
 const double RESOLUTION = 0.01f;
 

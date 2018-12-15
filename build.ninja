@@ -117,7 +117,11 @@ libs = -lpthread -lSDL2
 cc = gcc
 cxx = g++
 
+build build/_bmp.o: cxx src/bmp.cpp
 build build/_draw_helper.o: cxx src/draw_helper.cpp
+build build/_functions.o: cxx src/functions.cpp
+build build/_hypercomplex.o: cxx src/hypercomplex.cpp
+build build/_iter.o: cxx src/iter.cpp
 build build/_main.o: cxx src/main.cpp
 build build/_ray.o: cxx src/ray.cpp
-build bin/raytracer: link build/_DrawHelper.o build/_draw_helper.o build/_main.o build/_ray.o
+build bin/raytracer: link build/_bmp.o build/_draw_helper.o build/_functions.o build/_hypercomplex.o build/_iter.o build/_main.o build/_ray.o
