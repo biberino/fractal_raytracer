@@ -113,11 +113,11 @@ ldflags =  -g
 rel_path = 
 cxxflags = -std=c++11 -Ofast -ffast-math -g
 # ldflags = -lpthread -std=c++11 -Ofast -ffast-math `pkg-config gtkmm-3.0 --cflags --libs`
-libs = -lpthread -lGL -lGLU -lglut
+libs = -lpthread -lSDL2
 cc = gcc
 cxx = g++
 
-build build/_DrawHelper.o: cxx src/DrawHelper.cpp
+build build/_draw_helper.o: cxx src/draw_helper.cpp
 build build/_main.o: cxx src/main.cpp
 build build/_ray.o: cxx src/ray.cpp
-build bin/raytracer: link build/_DrawHelper.o build/_main.o build/_ray.o
+build bin/raytracer: link build/_DrawHelper.o build/_draw_helper.o build/_main.o build/_ray.o
