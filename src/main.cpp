@@ -1,6 +1,5 @@
 
 
-#include <SDL2/SDL.h>
 #include <iostream>
 
 #include "global.hpp"
@@ -42,7 +41,7 @@ Color calc_pixel(Pixel p, screen_context &context)
         {
 
             //return Color(255,255,255);
-            int value = iter_normal(100, point, 2.0f, mandelbrot);
+            int value = iter_normal(100, point, 2.0f, mandelbrot_8);
             if (value != -1)
             {
                 Color base;
@@ -87,15 +86,6 @@ main(int argc, char const *argv[])
 
     screen_context context(auge, fixpunkt, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_DISTANCE);
 
-    SDL_Event event;
-    SDL_Renderer *renderer;
-    SDL_Window *window;
-
-    SDL_Init(SDL_INIT_VIDEO);
-    SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &window, &renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
-
     for (size_t i = 0; i < WIDTH; i++)
     {
         for (size_t j = 0; j < HEIGHT; j++)
@@ -105,15 +95,6 @@ main(int argc, char const *argv[])
         }
     }
     bmp_export("test.bmp");
-    SDL_RenderPresent(renderer);
-    while (1)
-    {
-        if (SDL_PollEvent(&event) && event.type == SDL_QUIT)
-            break;
-    }
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
 
     return 0;
 }

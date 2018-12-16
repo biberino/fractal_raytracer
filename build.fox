@@ -1,6 +1,5 @@
 cxxflags = -std=c++11 -Ofast -ffast-math -g
-# ldflags = -lpthread -std=c++11 -Ofast -ffast-math `pkg-config gtkmm-3.0 --cflags --libs`
-libs = pthread SDL2
+libs = pthread
 cc = gcc
 cxx = g++
 
